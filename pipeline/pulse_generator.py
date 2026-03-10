@@ -150,7 +150,15 @@ def call_gemini(themes, metrics):
            "quote 1 text", "quote 2 text", "quote 3 text" // Exactly 3 anonymized quotes highlighting the core issues
         ],
         "action_ideas": [
-           "idea 1", "idea 2", "idea 3" // Exactly 3 actionable product ideas based strictly on these themes
+            {{
+                "title": "Short title for the opportunity",
+                "solution": "Clear description of the effective solution to implement",
+                "reach": "1-10",
+                "impact": "1-10",
+                "confidence": "10-100%",
+                "effort": "1-10",
+                "rice_score": "float value of (R*I*C%)/E"
+            }} // Exactly 3 actionable product ideas based strictly on these themes, scored using the RICE matrix
         ]
       }}
       
@@ -281,10 +289,26 @@ def generate_pdf(pulse_data, date_str):
         story.append(Paragraph(f"<i>\"{q}\"</i>", quote_style))
     story.append(Spacer(1, 10))
         
-    # 4. Actionable Ideas
-    story.append(Paragraph("<b>Product Opportunities</b>", heading_style))
+    # 4. Actionable Ideas (RICE Matrix)
+    story.append(Paragraph("<b>Product Opportunities (RICE Prioritized)</b>", heading_style))
     for idea in pulse_data.get("action_ideas", []):
-        story.append(Paragraph(f"• {idea}", bullet_style))
+        if isinstance(idea, dict):
+            title = idea.get("title", "Unknown Opportunity")
+            solution = idea.get("solution", "")
+            rice = idea.get("rice_score", "0.0")
+            r = idea.get("reach", "-")
+            i = idea.get("impact", "-")
+            c = idea.get("confidence", "-")
+            e = idea.get("effort", "-")
+            
+            p_text = f"<b>{title}</b> (RICE Score: {rice})<br/>"
+            p_text += f"<font color='#555555'>{solution}</font><br/>"
+            p_text += f"<font size='9' color='#888888'>[Reach:{r} | Impact:{i} | Confidence:{c} | Effort:{e}]</font>"
+            story.append(Paragraph(p_text, bullet_style))
+            story.append(Spacer(1, 6))
+        else:
+            # Fallback for old simple list format
+            story.append(Paragraph(f"• {idea}", bullet_style))
         
     # Build the PDF
     try:
