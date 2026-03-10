@@ -7,6 +7,7 @@ from email.message import EmailMessage
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
+from email.mime.application import MIMEApplication
 import base64
 from datetime import datetime, timezone
 
@@ -105,21 +106,13 @@ def send_email(pulse_data, is_fallback=False):
         msg.attach(img)
 
     # Attach PDF
+    # Attach PDF
     if os.path.exists(config.PDF_OUTPUT_PATH):
         with open(config.PDF_OUTPUT_PATH, 'rb') as f:
             pdf_data = f.read()
             
-        pdf_attachment = MIMEText(pdf_data, 'base64', 'utf-8')
-        pdf_attachment.replace_header('Content-Type', 'application/pdf')
-        pdf_attachment.add_header('Content-Disposition', f'attachment; filename="{os.path.basename(config.PDF_OUTPUT_PATH)}"')
-        from email import encoders
-        
-        # Proper attachment for mixed multipart
-        pdf_part = MIMEText('')
-        pdf_part.set_payload(pdf_data)
-        encoders.encode_base64(pdf_part)
-        pdf_part.add_header('Content-Disposition', f'attachment; filename="{os.path.basename(config.PDF_OUTPUT_PATH)}"')
-        pdf_part.set_type('application/pdf')
+        pdf_part = MIMEApplication(pdf_data, Name=os.path.basename(config.PDF_OUTPUT_PATH))
+        pdf_part['Content-Disposition'] = f'attachment; filename="{os.path.basename(config.PDF_OUTPUT_PATH)}"'
         msg.attach(pdf_part)
     else:
         print(f"Warning: PDF not found at {config.PDF_OUTPUT_PATH}. Sending email without attachment.")
