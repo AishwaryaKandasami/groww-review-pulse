@@ -60,7 +60,6 @@ def send_email(pulse_data, is_fallback=False):
         <p><i>Week of {date_str}</i></p>
         
         <div style="background-color: #f9f9f9; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
-          <h3 style="margin-top: 0;">TL;DR</h3>
           {"<br>".join(body_intro.split(chr(10)))}
         </div>
         
