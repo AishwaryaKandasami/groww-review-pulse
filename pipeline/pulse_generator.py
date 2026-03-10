@@ -151,17 +151,52 @@ def call_gemini(themes, metrics):
         ],
         "action_ideas": [
             {{
-                "title": "Short title for the opportunity",
-                "solution": "Clear description of the effective solution to implement",
-                "reach": "1-10",
-                "impact": "1-10",
-                "confidence": "10-100%",
-                "effort": "1-10",
-                "rice_score": "float value of (R*I*C%)/E"
-            }} // Exactly 3 actionable product ideas based strictly on these themes, scored using the RICE matrix
+                "rank": 1,
+                "title": "Action-Oriented Title",
+                "rice_score": 13.8,
+                "effort_weeks": 4,
+                "sentence_1": "What to build or fix, specifically.",
+                "sentence_2": "How to measure success (the metric).",
+                "review_count": 17,
+                "avg_rating": 1.3,
+                "trend_signal": "↑ +42% vs last week"
+            }}
         ]
       }}
       
+    RICE CALCULATION RULES:
+    Derive all inputs from actual review data — no guessing or arbitrary scores.
+    Reach (use review count as proxy): = theme_review_count
+    Impact (derive from average star rating of theme. Since data has sentiment_score 0-1, map to stars where 0.0=1★, 1.0=5★):
+      avg_rating <= 1.5  ->  5
+      avg_rating <= 2.0  ->  4
+      avg_rating <= 3.0  ->  3
+      avg_rating <= 4.0  ->  2
+      avg_rating >  4.0  ->  1
+    Confidence (capped at 65% — review data only):
+      review_count >= 15  ->  0.65
+      review_count >= 10  ->  0.55
+      review_count >= 5   ->  0.45
+      review_count <  5   ->  0.35
+    Effort (person-weeks — LLM classifies based on fix complexity):
+      Hotfix / config change          ->  1 week
+      Single engineer, clear scope    ->  2 weeks
+      Small team, defined feature     ->  4 weeks
+      Cross-team, complex initiative  ->  8 weeks
+
+    Formula: RICE = (Reach * Impact * Confidence) / Effort
+    Order opportunities by RICE score — highest first. If tied, rank by review volume.
+
+    WRITING RULES:
+    - Generate exactly 3 product opportunities.
+    - Solution-focused only (no problem restatement).
+    - Start title with an action verb (Fix, Launch, Build, Implement, Streamline).
+    - No phrases like "users are frustrated" or "users face difficulties" — solutions only.
+    - No bullet points inside opportunities.
+    - No RICE breakdown shown (Reach/Impact/Confidence/Effort components hidden).
+    - Entire section must be under 120 words.
+    - Tone: direct, specific, engineering-facing.
+    
     DATA INPUT:
     Sentiment Trend Metric (WoW): {metrics.get('sentiment_trend')}
     Spike Alerts (>30% WoW volume increase): {spike_str}
@@ -289,23 +324,26 @@ def generate_pdf(pulse_data, date_str):
         story.append(Paragraph(f"<i>\"{q}\"</i>", quote_style))
     story.append(Spacer(1, 10))
         
-    # 4. Actionable Ideas (RICE Matrix)
-    story.append(Paragraph("<b>Product Opportunities (RICE Prioritized)</b>", heading_style))
+    # 4. Actionable Ideas
+    story.append(Paragraph("<b>Product Opportunities</b>", heading_style))
     for idea in pulse_data.get("action_ideas", []):
         if isinstance(idea, dict):
+            rank = idea.get("rank", 1)
             title = idea.get("title", "Unknown Opportunity")
-            solution = idea.get("solution", "")
             rice = idea.get("rice_score", "0.0")
-            r = idea.get("reach", "-")
-            i = idea.get("impact", "-")
-            c = idea.get("confidence", "-")
-            e = idea.get("effort", "-")
+            effort = idea.get("effort_weeks", "0")
+            s1 = idea.get("sentence_1", "")
+            s2 = idea.get("sentence_2", "")
+            revs = idea.get("review_count", 0)
+            rating = idea.get("avg_rating", "0.0")
+            trend = idea.get("trend_signal", "→ stable")
             
-            p_text = f"<b>{title}</b> (RICE Score: {rice})<br/>"
-            p_text += f"<font color='#555555'>{solution}</font><br/>"
-            p_text += f"<font size='9' color='#888888'>[Reach:{r} | Impact:{i} | Confidence:{c} | Effort:{e}]</font>"
-            story.append(Paragraph(p_text, bullet_style))
-            story.append(Spacer(1, 6))
+            p_text = f"<b>#{rank}. {title}</b><br/>"
+            p_text += f"<font size='10' color='#333333'>RICE Score: {rice} | Effort: {effort} week{'s' if str(effort) != '1' else ''}</font><br/><br/>"
+            p_text += f"<font size='11' color='#444444'>{s1} {s2}</font><br/>"
+            p_text += f"<font size='9' color='#888888'>Signal: {revs} reviews | Avg {rating}★ | {trend}</font>"
+            story.append(Paragraph(p_text, normal_style))
+            story.append(Spacer(1, 10))
         else:
             # Fallback for old simple list format
             story.append(Paragraph(f"• {idea}", bullet_style))
