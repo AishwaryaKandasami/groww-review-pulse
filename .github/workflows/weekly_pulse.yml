@@ -38,10 +38,7 @@ jobs:
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
         run: python -m pipeline.theme_engine
-        
-      # Continue on error is true here because we want the pipeline to attempt Stage 4/5 
-      # using the fallback mechanism if Groq completely fails
-      continue-on-error: true
+        continue-on-error: true
 
       - name: Stage 4 - Pulse Generator (Gemini + PDF)
         env:

@@ -15,6 +15,14 @@ except ImportError:
     sys.exit(1)
 
 try:
+    import matplotlib.pyplot as plt
+    import io
+    import base64
+except ImportError:
+    print("Error: 'matplotlib' not installed. Run 'pip install matplotlib'")
+    sys.exit(1)
+
+try:
     from reportlab.lib.pagesizes import letter
     from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, HRFlowable
     from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
@@ -131,7 +139,7 @@ def call_gemini(themes, metrics):
     - Output must be valid JSON matching this exact structure:
       {{
         "email_subject": "subject line (do not include date/week)",
-        "email_body_draft": "brief introduction text for the email body (2-3 sentences)",
+        "email_highlight_summary": "Write exactly 3 lines using emoji traffic light format: 1. Top issue (e.g. 🔴 Top Issue: ...), 2. Watch item (e.g. 🟡 Watch Item: ...), 3. Recurring signal (e.g. 🟢 Clean Signal: ...)",
         "pdf_title": "Title for the PDF report",
         "sentiment_trend": "Short summary of the sentiment based on the data trend",
         "spikes": "Short text highlighting if there are spikes (or saying none)",
@@ -286,6 +294,56 @@ def generate_pdf(pulse_data, date_str):
         print(f"Failed to generate PDF: {e}")
 
 
+def generate_charts(themes, metrics):
+    """Generates base64 encoded png charts for email embedding."""
+    charts = {}
+    
+    # 1. Theme Volumes Bar Chart
+    if themes:
+        # Sort by volume
+        sorted_themes = sorted(themes, key=lambda x: x.get("review_count", 0), reverse=True)[:config.MAX_THEMES]
+        names = [t.get("theme_name", "Unknown")[:20] + "..." if len(t.get("theme_name", ""))>20 else t.get("theme_name", "Unknown") for t in sorted_themes]
+        volumes = [t.get("review_count", 0) for t in sorted_themes]
+        
+        plt.figure(figsize=(6, 4))
+        plt.barh(names[::-1], volumes[::-1], color="#00D09C")
+        plt.title("Top Themes by Volume")
+        plt.xlabel("Number of Reviews")
+        plt.tight_layout()
+        
+        buf = io.BytesIO()
+        plt.savefig(buf, format='png', dpi=100)
+        plt.close()
+        charts["themes_chart"] = base64.b64encode(buf.getvalue()).decode('utf-8')
+        
+    # 2. Sentiment Score Chart
+    curr_sent = metrics.get('current_sentiment', 0.0)
+    prev_sent = curr_sent # default if no previous
+    
+    if "sentiment_trend" in metrics and "Up" in metrics["sentiment_trend"]:
+        try:
+             diff = float(metrics["sentiment_trend"].split("+")[1].replace(")", ""))
+             prev_sent = curr_sent - diff
+        except: pass
+    elif "sentiment_trend" in metrics and "Down" in metrics["sentiment_trend"]:
+        try:
+             diff = float(metrics["sentiment_trend"].split("(")[1].replace(")", ""))
+             prev_sent = curr_sent - diff
+        except: pass
+        
+    plt.figure(figsize=(5, 3))
+    plt.bar(["Last Week", "This Week"], [prev_sent, curr_sent], color=["#CCCCCC", "#00D09C"])
+    plt.title("Average Sentiment Score (0 to 1)")
+    plt.ylim(0, 1.0)
+    plt.tight_layout()
+    
+    buf = io.BytesIO()
+    plt.savefig(buf, format='png', dpi=100)
+    plt.close()
+    charts["sentiment_chart"] = base64.b64encode(buf.getvalue()).decode('utf-8')
+    
+    return charts
+
 def main():
     print("Starting Stage 4: pulse_generator.py")
     
@@ -313,6 +371,14 @@ def main():
     pulse_data["generated_at"] = now_utc.isoformat()
     # Adding computed metrics for the deliver_and_commit snapshot to write later
     pulse_data["raw_metrics"] = metrics
+    
+    # Add charts and single-line summary statistics for the email module to use
+    pulse_data["charts_base64"] = generate_charts(themes, metrics)
+    pulse_data["email_stats"] = {
+        "overall_sentiment": f"{metrics.get('current_sentiment', 0.0) * 100:.1f}%",
+        "top_store": "Play Store" if config.PLAY_STORE_RATIO > config.APP_STORE_RATIO else "App Store",
+        "reviews_analysed": config.LLM_INPUT_LIMIT
+    }
     
     # Save the JSON pulse note
     os.makedirs(os.path.dirname(config.PULSE_NOTE_PATH), exist_ok=True)

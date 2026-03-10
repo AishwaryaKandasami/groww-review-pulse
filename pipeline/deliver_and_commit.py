@@ -4,6 +4,10 @@ import json
 import smtplib
 import subprocess
 from email.message import EmailMessage
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
+import base64
 from datetime import datetime, timezone
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -38,32 +42,85 @@ def send_email(pulse_data, is_fallback=False):
     if is_fallback:
         subject = f"⚠️ [Data Pending] {subject}"
         
-    msg = EmailMessage()
+    msg = MIMEMultipart('mixed')
     msg['Subject'] = subject
     msg['From'] = sender
     msg['To'] = recipient
 
-    # Construct Body
-    body_intro = pulse_data.get("email_body_draft", "Please find the Weekly Pulse Note attached.")
+    # Construct HTML Body
+    body_intro = pulse_data.get("email_highlight_summary", "Please find the Weekly Pulse Note attached.")
+    stats = pulse_data.get("email_stats", {})
+    charts = pulse_data.get("charts_base64", {})
     
-    body = f"""Hi Team,
-
-{body_intro}
-
-{"*Note: This report contains data pending from previous weeks due to a temporary data fetch delay.*" if is_fallback else ""}
-
-Please find the detailed 1-page report attached as a PDF.
-
-Best,
-Automated Pulse Engine
-"""
-    msg.set_content(body)
+    html_content = f"""
+    <html>
+      <body style="font-family: Arial, sans-serif; color: #333; max-width: 600px; line-height: 1.6;">
+        <h2 style="color: #00D09C;">Groww Weekly Review Pulse</h2>
+        <p><i>Week of {date_str}</i></p>
+        
+        <div style="background-color: #f9f9f9; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+          <h3 style="margin-top: 0;">TL;DR</h3>
+          {"<br>".join(body_intro.split(chr(10)))}
+        </div>
+        
+        <table style="width: 100%; text-align: left; margin-bottom: 20px;" border="0">
+          <tr>
+            <td><b>Total Reviews Analysed:</b> {stats.get('reviews_analysed', '80')}</td>
+            <td><b>Top Source:</b> {stats.get('top_store', 'Play Store')}</td>
+            <td><b>Overall Sentiment:</b> {stats.get('overall_sentiment', 'N/A')}</td>
+          </tr>
+        </table>
+    """
+    
+    # Embed Charts if available
+    if charts.get("themes_chart"):
+        html_content += f"<h3>Top Themes</h3><img src='cid:themes_chart' style='max-width: 100%; border: 1px solid #ddd;'>"
+    if charts.get("sentiment_chart"):
+        html_content += f"<h3>Sentiment Trend</h3><img src='cid:sentiment_chart' style='max-width: 100%; border: 1px solid #ddd;'>"
+        
+    html_content += """
+        <br><br>
+        <p><b>Full breakdown, exact quotes, and product feature ideas are in the attached PDF.</b></p>
+        <p style="font-size: 0.9em; color: #888;">Automated Pulse Engine</p>
+      </body>
+    </html>
+    """
+    
+    msg_alt = MIMEMultipart('alternative')
+    msg.attach(msg_alt)
+    msg_alt.attach(MIMEText("Please view this email in an HTML-compatible client.", 'plain'))
+    msg_alt.attach(MIMEText(html_content, 'html'))
+    
+    # Attach Inline Images
+    if charts.get("themes_chart"):
+        img = MIMEImage(base64.b64decode(charts["themes_chart"]))
+        img.add_header('Content-ID', '<themes_chart>')
+        img.add_header('Content-Disposition', 'inline')
+        msg.attach(img)
+        
+    if charts.get("sentiment_chart"):
+        img = MIMEImage(base64.b64decode(charts["sentiment_chart"]))
+        img.add_header('Content-ID', '<sentiment_chart>')
+        img.add_header('Content-Disposition', 'inline')
+        msg.attach(img)
 
     # Attach PDF
     if os.path.exists(config.PDF_OUTPUT_PATH):
         with open(config.PDF_OUTPUT_PATH, 'rb') as f:
             pdf_data = f.read()
-        msg.add_attachment(pdf_data, maintype='application', subtype='pdf', filename=os.path.basename(config.PDF_OUTPUT_PATH))
+            
+        pdf_attachment = MIMEText(pdf_data, 'base64', 'utf-8')
+        pdf_attachment.replace_header('Content-Type', 'application/pdf')
+        pdf_attachment.add_header('Content-Disposition', f'attachment; filename="{os.path.basename(config.PDF_OUTPUT_PATH)}"')
+        from email import encoders
+        
+        # Proper attachment for mixed multipart
+        pdf_part = MIMEText('')
+        pdf_part.set_payload(pdf_data)
+        encoders.encode_base64(pdf_part)
+        pdf_part.add_header('Content-Disposition', f'attachment; filename="{os.path.basename(config.PDF_OUTPUT_PATH)}"')
+        pdf_part.set_type('application/pdf')
+        msg.attach(pdf_part)
     else:
         print(f"Warning: PDF not found at {config.PDF_OUTPUT_PATH}. Sending email without attachment.")
 
