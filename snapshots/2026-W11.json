@@ -1,59 +1,60 @@
 {
   "themes": [
     {
-      "theme_name": "Brokerage and Charges",
-      "review_count": 25,
+      "theme_name": "Brokerage and Charges Issues",
+      "review_count": 23,
       "sentiment_score": 0.0,
       "representative_quotes": [
         "very high broker rate in every transaction or share sell",
-        "they deduct brokerage charges at will. Sometimes 78, sometimes 84, sometimes 64",
-        "high brokerage"
+        "extra charges along with brokerage",
+        "deduct brokerage charges at will"
       ]
     },
     {
-      "theme_name": "Technical Issues and Bugs",
-      "review_count": 15,
+      "theme_name": "Technical Issues and Glitches",
+      "review_count": 17,
       "sentiment_score": 0.0,
       "representative_quotes": [
-        "app lagging reflecting of latest SEBI guidelines",
-        "Today the app crashed & I got 3600 loss because of crashed",
-        "Many bugs are coming while trading in apps and they are irritating me"
+        "app crashed & I got 3600 loss because of crashed",
+        "technical problem and also they do not pick calls",
+        "app auto-liquidated my mutual funds and refuses to provide any update"
       ]
     },
     {
-      "theme_name": "Customer Service and Support",
-      "review_count": 10,
+      "theme_name": "Customer Support and Responsiveness",
+      "review_count": 14,
       "sentiment_score": 0.0,
       "representative_quotes": [
         "Rand Customer Service 🤧 BKL Ko 10 min Tak Call karne ka try Kia Koi nahi uthaya",
-        "customer care is verey slow, not responding on time, showing wrong data",
+        "customer service is very bad bina order apne aap kar dete h",
         "worst customer support and irresponsible for the customer service"
       ]
     },
     {
-      "theme_name": "Order Execution and Trading Experience",
+      "theme_name": "Feature Requests and Improvements",
       "review_count": 10,
-      "sentiment_score": 0.0,
+      "sentiment_score": 0.5,
       "representative_quotes": [
-        "isse ghatiya app koi nhi hai 3 se 4 bar order khud se execute ho jata hai or loss ho jata hai",
-        "execution of order is delayed and technical problem and also they do not pick calls",
-        "in this app, I often face technical errors when trying to exit the market"
+        "add multiple basket for future and options",
+        "add the technical support & resistance to nifty 50 chart in app",
+        "add features to commodity section"
       ]
     },
     {
-      "theme_name": "Feature Requests and Suggestions",
-      "review_count": 10,
-      "sentiment_score": 0.4,
+      "theme_name": "Miscellaneous Issues",
+      "review_count": 16,
+      "sentiment_score": 0.0,
       "representative_quotes": [
-        "add multiple basket for future and options",
-        "add the technical support & resistance to nifty 50 chart in app like individual stocks are having",
-        "Scalper mode me doule screen ki suvidha mile to bhut hi accha hoga scalpers ke liye"
+        "not good this application not good",
+        "distrubing ad",
+        "slow"
       ]
     }
   ],
   "metrics": {
-    "current_sentiment": 0.08,
-    "sentiment_trend": "Up (+0.08)",
+    "current_sentiment": 0.1,
+    "previous_sentiment": 0.08,
+    "sentiment_trend": "Stable",
     "spike_alerts": []
   }
 }
