@@ -68,6 +68,7 @@ def compute_metrics(current_themes, previous_snapshot):
         
     metrics = {
         "current_sentiment": curr_avg_sentiment,
+        "previous_sentiment": curr_avg_sentiment, # Default
         "sentiment_trend": "No prior data for WoW comparison",
         "spike_alerts": []
     }
@@ -80,6 +81,7 @@ def compute_metrics(current_themes, previous_snapshot):
     prev_avg_sentiment = 0.0
     if prev_themes:
         prev_avg_sentiment = sum(t.get("sentiment_score", 0.0) for t in prev_themes) / len(prev_themes)
+        metrics["previous_sentiment"] = prev_avg_sentiment
         
     # Sentiment trend vs last week
     diff = curr_avg_sentiment - prev_avg_sentiment
@@ -394,18 +396,7 @@ def generate_charts(themes, metrics):
         
     # 2. Sentiment Score Chart
     curr_sent = metrics.get('current_sentiment', 0.0)
-    prev_sent = curr_sent # default if no previous
-    
-    if "sentiment_trend" in metrics and "Up" in metrics["sentiment_trend"]:
-        try:
-             diff = float(metrics["sentiment_trend"].split("+")[1].replace(")", ""))
-             prev_sent = curr_sent - diff
-        except: pass
-    elif "sentiment_trend" in metrics and "Down" in metrics["sentiment_trend"]:
-        try:
-             diff = float(metrics["sentiment_trend"].split("(")[1].replace(")", ""))
-             prev_sent = curr_sent - diff
-        except: pass
+    prev_sent = metrics.get('previous_sentiment', curr_sent) # Default to current if no data
         
     plt.figure(figsize=(5, 3))
     plt.bar(["Last Week", "This Week"], [prev_sent, curr_sent], color=["#CCCCCC", "#00D09C"])
