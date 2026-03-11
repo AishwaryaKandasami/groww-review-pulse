@@ -1,0 +1,59 @@
+{
+  "themes": [
+    {
+      "theme_name": "Brokerage Charges and Fees",
+      "review_count": 14,
+      "sentiment_score": 0.0,
+      "representative_quotes": [
+        "This app isn't good. They deduct brokerage charges at will. Sometimes 78, sometimes 84, sometimes 64. It's not a good app these days.",
+        "if u are small trader or invester I recommend never go on this platform they give to kuch charge which accumulated your profits.",
+        "high brokerage"
+      ]
+    },
+    {
+      "theme_name": "Technical Issues and Glitches",
+      "review_count": 11,
+      "sentiment_score": 0.0,
+      "representative_quotes": [
+        "Today the app crashed & I got 3600 loss because of crashed. Not working the app to sell when I was at profit.. after 2 hour sold the trade at 3600 loss because of grow.",
+        "In this app, I often face technical errors when trying to exit the market, and because I’m unable to exit on time, I end up incurring losses.",
+        "App lagging reflecting of latest SEBI guidelines."
+      ]
+    },
+    {
+      "theme_name": "Customer Support and Responsiveness",
+      "review_count": 9,
+      "sentiment_score": 0.0,
+      "representative_quotes": [
+        "Rand Customer Service 🤧 BKL Ko 10 min Tak Call karne ka try Kia Koi nahi uthaya 😐 uninstall kar raha 👎",
+        "customer service is very bad bina order apne aap kar dete h grow me aaj ka hi order dekh sakte h",
+        "worst customer support and irresponsible for the customer service."
+      ]
+    },
+    {
+      "theme_name": "Order Execution and Trading Experience",
+      "review_count": 8,
+      "sentiment_score": 0.0,
+      "representative_quotes": [
+        "isse ghatiya app koi nhi hai 3 se 4 bar order khud se execute ho jata hai or loss ho jata hai aj to hadd ho gya 7k ka loss ho gya ish gande app k vjh se 😡😡😡😡",
+        "never do option trading in Groww because GTT orders only trade above our price. disappointed groww",
+        "Alert! These are fake loan apps. The 5-star ratings are fake and given by their own team. Please read everything before downloading. Don't take any loans from thes"
+      ]
+    },
+    {
+      "theme_name": "External Funds Tracking and Portfolio Management",
+      "review_count": 4,
+      "sentiment_score": 0.0,
+      "representative_quotes": [
+        "Dear Team, Please look into this, external funds unable to track in Groww application. Few days error facing i.e. \"Tracking external funds is currently paused\".",
+        "External funds tracking has been paused which was one of the USP of this app.",
+        "I have been trying to update my external mutual fund holdings for the last one week, but every time it shows that the “Updation of external holdings is paused.”"
+      ]
+    }
+  ],
+  "metrics": {
+    "current_sentiment": 0.0,
+    "sentiment_trend": "No prior data for WoW comparison",
+    "spike_alerts": []
+  }
+}
