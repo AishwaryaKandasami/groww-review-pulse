@@ -73,10 +73,10 @@ def extract_themes(reviews, client: Groq):
     For each theme, provide:
     1. A short, highly descriptive theme_name.
     2. The review_count (approximate number of reviews mapping to this theme).
-    3. A sentiment_score from 0.0 (completely negative) to 1.0 (completely positive).
+    3. A sentiment_score from 0.0 (completely negative) to 1.0 (completely positive). **CRITICAL:** Do NOT default to 0.0. Calculate a reasonable average (e.g., if reviews are mostly 1-star but some are 3-star, the score should be around 0.2 or 0.3. A score of 0.0 means every single word is pure hatred, which is rare).
     4. representative_quotes: 2-3 direct quotes from users (strip out any names or PII).
 
-    You MUST return ONLY a valid JSON object matching this schema, and nothing else:
+    You MUST return ONLY a valid JSON object matching this schema, and nothing else. DO NOT wrap the JSON in markdown formatting (like ```json), just output the raw JSON object itself:
     {{
         "themes": [
             {{

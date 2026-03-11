@@ -155,8 +155,8 @@ def call_gemini(themes, metrics):
                 "title": "Action-Oriented Title",
                 "rice_score": 13.8,
                 "effort_weeks": 4,
-                "sentence_1": "What to build or fix, specifically.",
-                "sentence_2": "How to measure success (the metric).",
+                "sentence_1": "What to build or fix, specifically in one sentence.",
+                "sentence_2": "The expected business impact, mapped down to a measurable success metric.",
                 "review_count": 17,
                 "avg_rating": 1.3,
                 "trend_signal": "↑ +42% vs last week"
@@ -165,27 +165,11 @@ def call_gemini(themes, metrics):
       }}
       
     RICE CALCULATION RULES:
-    Derive all inputs from actual review data — no guessing or arbitrary scores.
-    Reach (use review count as proxy): = theme_review_count
-    Impact (derive from average star rating of theme. Since data has sentiment_score 0-1, map to stars where 0.0=1★, 1.0=5★):
-      avg_rating <= 1.5  ->  5
-      avg_rating <= 2.0  ->  4
-      avg_rating <= 3.0  ->  3
-      avg_rating <= 4.0  ->  2
-      avg_rating >  4.0  ->  1
-    Confidence (capped at 65% — review data only):
-      review_count >= 15  ->  0.65
-      review_count >= 10  ->  0.55
-      review_count >= 5   ->  0.45
-      review_count <  5   ->  0.35
     Effort (person-weeks — LLM classifies based on fix complexity):
       Hotfix / config change          ->  1 week
       Single engineer, clear scope    ->  2 weeks
       Small team, defined feature     ->  4 weeks
       Cross-team, complex initiative  ->  8 weeks
-
-    Formula: RICE = (Reach * Impact * Confidence) / Effort
-    Order opportunities by RICE score — highest first. If tied, rank by review volume.
 
     WRITING RULES:
     - Generate exactly 3 product opportunities.
@@ -231,6 +215,36 @@ def call_gemini(themes, metrics):
             raw_text = raw_text[:-3]
             
         pulse_data = json.loads(raw_text.strip())
+        
+        # Calculate RICE strictly in Python
+        if "action_ideas" in pulse_data:
+            for idea in pulse_data["action_ideas"]:
+                revs = int(idea.get("review_count", 0))
+                rating = float(idea.get("avg_rating", 5.0))
+                effort = float(idea.get("effort_weeks", 1.0))
+                
+                impact = 1
+                if rating <= 1.5: impact = 5
+                elif rating <= 2.0: impact = 4
+                elif rating <= 3.0: impact = 3
+                elif rating <= 4.0: impact = 2
+                
+                conf = 0.35
+                if revs >= 15: conf = 0.65
+                elif revs >= 10: conf = 0.55
+                elif revs >= 5: conf = 0.45
+                
+                # Protect against division by zero
+                effort = max(1.0, effort)
+                
+                rice = (revs * impact * conf) / effort
+                idea["rice_score"] = round(rice, 1)
+                
+            # Re-sort and re-rank
+            pulse_data["action_ideas"] = sorted(pulse_data["action_ideas"], key=lambda x: (x.get("rice_score", 0), x.get("review_count", 0)), reverse=True)
+            for i, idea in enumerate(pulse_data["action_ideas"]):
+                idea["rank"] = i + 1
+                
         return pulse_data
     except json.JSONDecodeError as j_err:
         print(f"Failed to parse Gemini output as JSON: {j_err}")
