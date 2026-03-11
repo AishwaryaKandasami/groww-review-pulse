@@ -1,59 +1,59 @@
 {
   "themes": [
     {
-      "theme_name": "Brokerage and Charges Issues",
-      "review_count": 23,
-      "sentiment_score": 0.0,
+      "theme_name": "Brokerage Charges and Fees",
+      "review_count": 21,
+      "sentiment_score": 0.05,
       "representative_quotes": [
-        "very high broker rate in every transaction or share sell",
-        "extra charges along with brokerage",
-        "deduct brokerage charges at will"
+        "very high broker rate in every transaction or share sell , Neo kotak is the best aap for trading",
+        "if u are small trader or invester I recommend never go on this platform they give to kuch charge which accumulated your profits.",
+        "sometimes 78, sometimes 84, sometimes 64. It's not a good app these days. This is froud applications"
       ]
     },
     {
       "theme_name": "Technical Issues and Glitches",
       "review_count": 17,
-      "sentiment_score": 0.0,
+      "sentiment_score": 0.05,
       "representative_quotes": [
-        "app crashed & I got 3600 loss because of crashed",
-        "technical problem and also they do not pick calls",
-        "app auto-liquidated my mutual funds and refuses to provide any update"
+        "Today the app crashed & I got 3600 loss because of crashed. Not working the app to sell when I was at profit..",
+        "isse ghatiya app koi nhi hai 3 se 4 bar order khud se execute ho jata hai or loss ho jata hai aj to hadd ho gya 7k ka loss ho gya ish gande app k vjh se",
+        "App lagging reflecting of latest SEBI guidelines."
       ]
     },
     {
       "theme_name": "Customer Support and Responsiveness",
       "review_count": 14,
-      "sentiment_score": 0.0,
+      "sentiment_score": 0.05,
       "representative_quotes": [
-        "Rand Customer Service 🤧 BKL Ko 10 min Tak Call karne ka try Kia Koi nahi uthaya",
-        "customer service is very bad bina order apne aap kar dete h",
-        "worst customer support and irresponsible for the customer service"
+        "Rand Customer Service 🤧 BKL Ko 10 min Tak Call karne ka try Kia Koi nahi uthaya 😐 uninstall kar raha 👎",
+        "customer care is verey slow, not responding on time, showing wrong data.",
+        "worst customer support and irresponsible for the customer service."
       ]
     },
     {
-      "theme_name": "Feature Requests and Improvements",
-      "review_count": 10,
-      "sentiment_score": 0.5,
+      "theme_name": "Order Execution and Trading Experience",
+      "review_count": 12,
+      "sentiment_score": 0.05,
       "representative_quotes": [
-        "add multiple basket for future and options",
-        "add the technical support & resistance to nifty 50 chart in app",
-        "add features to commodity section"
+        "bhai ye aap orders execution me farji karta h",
+        "don't use this app totally froud ❌",
+        "In this app, I often face technical errors when trying to exit the market, and because I’m unable to exit on time, I end up incurring losses."
       ]
     },
     {
-      "theme_name": "Miscellaneous Issues",
-      "review_count": 16,
-      "sentiment_score": 0.0,
+      "theme_name": "External Funds and Mutual Funds",
+      "review_count": 8,
+      "sentiment_score": 0.1,
       "representative_quotes": [
-        "not good this application not good",
-        "distrubing ad",
-        "slow"
+        "Dear Team, Please look into this, external funds unable to track in Groww application.",
+        "External funds tracking has been paused which was one of the USP of this app.",
+        "I have been trying to update my external mutual fund holdings for the last one week, but every time it shows that the “Updation of external holdings is paused.”"
       ]
     }
   ],
   "metrics": {
-    "current_sentiment": 0.1,
-    "previous_sentiment": 0.08,
+    "current_sentiment": 0.06000000000000001,
+    "previous_sentiment": 0.1,
     "sentiment_trend": "Stable",
     "spike_alerts": []
   }
