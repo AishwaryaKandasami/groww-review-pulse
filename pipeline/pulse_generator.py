@@ -10,8 +10,8 @@ import config
 
 try:
     import google.generativeai as genai
-except ImportError:
-    print("Error: 'google-generativeai' not installed. Run 'pip install google-generativeai'")
+except ImportError as e:
+    print(f"Error importing 'google-generativeai': {e}")
     sys.exit(1)
 
 try:
