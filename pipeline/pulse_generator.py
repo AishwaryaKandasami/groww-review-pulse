@@ -132,7 +132,9 @@ def call_gemini(themes, metrics):
     spike_str = json.dumps(metrics.get("spike_alerts", []), indent=2)
     
     prompt = f"""
-    You are a Senior Product Manager at Groww.
+    You are a Senior Product Manager at Groww and delivery lead with 10+ years 
+    of experience estimating engineering effort for consumer mobile 
+    apps in fintech, payments, and investing platforms.
     Write a highly actionable Weekly Pulse Note based on the latest mobile app reviews.
     
     STRICT CONSTRAINTS:
@@ -167,11 +169,169 @@ def call_gemini(themes, metrics):
       }}
       
     RICE CALCULATION RULES:
-    Effort (person-weeks — LLM classifies based on fix complexity):
-      Hotfix / config change          ->  1 week
-      Single engineer, clear scope    ->  2 weeks
-      Small team, defined feature     ->  4 weeks
-      Cross-team, complex initiative  ->  8 weeks
+    EFFORT DEFINITIONS
+    -------------------
+
+    1 week — Isolated, low-risk change
+      A single engineer can design, build, test, 
+      and ship this in one sprint with no dependency 
+      on other teams or systems.
+      
+      Examples:
+      - Copy or label change in the UI
+      - Adding a tooltip, disclaimer, or info modal
+      - Surfacing existing data in a new screen location
+      - Changing sort order or default filter state
+      - Adding a static FAQ or help article in-app
+      - Updating push notification copy or timing
+
+    2 weeks — Contained feature, clear scope
+      Requires one engineer and possibly one designer.
+      No backend dependency changes or new API contracts.
+      Can be scoped, built, and tested within one sprint
+      with low regression risk.
+      
+      Examples:
+      - Building a pre-trade fee breakdown screen
+        using data already available in the system
+      - Adding a transaction status tracker 
+        for an existing flow
+      - Implementing in-app chat SLA timer display
+      - Adding a confirmation step to an existing flow
+      - Building a filter or search on an existing list
+      - Surfacing support ticket status to the user
+
+    4 weeks — Multi-component feature
+      Requires a small team (2–3 engineers + designer).
+      Involves changes across frontend and backend.
+      May require new API contracts or data model changes.
+      Has meaningful regression risk on adjacent flows.
+      Needs dedicated QA cycle before release.
+      
+      Examples:
+      - Building a fund transfer tracking system 
+        with status updates end to end
+      - Implementing a new support routing and 
+        triage workflow with internal tooling
+      - Adding a brokerage calculator with real-time 
+        fee computation across instrument types
+      - Rebuilding an existing flow (onboarding, 
+        KYC, withdrawal) with improved UX
+      - Integrating a third-party service 
+        (chat SDK, analytics tool, helpdesk platform)
+
+    8 weeks — Platform or infrastructure level fix
+      Requires a cross-functional team across 
+      engineering, QA, product, and possibly data.
+      Involves root cause investigation before 
+      any fix can be scoped.
+      High regression risk across multiple product areas.
+      Requires instrumentation, monitoring, and 
+      staged rollout plan.
+      Cannot be time-boxed to a single sprint.
+      
+      Examples:
+      - Diagnosing and fixing app crashes during 
+        live trade execution
+      - Resolving chart rendering failures under 
+        real-time market data load
+      - Fixing performance degradation 
+        (lag, freeze, buffering) at scale
+      - Rebuilding a core transaction engine 
+        or order management system component
+      - Addressing data consistency issues 
+        across portfolio or holdings views
+      - Any fix where root cause is unknown 
+        and requires investigation first
+
+    CLASSIFICATION RULES
+    ---------------------
+
+    Rule 1 — Financial and transactional flows 
+    are always higher effort than they appear:
+      Any fix touching order placement, trade execution,
+      fund transfer, withdrawal, or portfolio calculation
+      carries hidden risk from regulatory compliance,
+      data integrity, and rollback requirements.
+      Minimum effort for any fix in these flows: 4 weeks.
+      If root cause is unknown: always 8 weeks.
+
+    Rule 2 — "Crashes" and "stability" are never quick fixes:
+      App crashes on a fintech platform require:
+        - Crash instrumentation and log analysis
+        - Root cause identification across device types
+        - Fix development and unit testing
+        - Regression testing across all affected flows
+        - Staged rollout with monitoring
+      Minimum effort for any crash or stability fix: 8 weeks.
+      No exceptions.
+
+    Rule 3 — Transparency and communication fixes 
+    are almost always faster than they feel:
+      If the underlying data already exists in the system
+      and the fix is about surfacing or explaining it
+      more clearly to the user — this is a UI and 
+      copy problem, not a backend problem.
+      Maximum effort for transparency fixes: 2 weeks.
+      
+    Rule 4 — Support and service fixes 
+    are process plus tooling:
+      Improving response times, adding self-serve options,
+      or fixing routing logic does not require 
+      rebuilding core infrastructure.
+      Maximum effort for support experience fixes: 2 weeks
+      unless a new third-party integration is required,
+      in which case: 4 weeks.
+
+    Rule 5 — Never return the same effort 
+    for more than one opportunity in the same batch:
+      If you are classifying 3 opportunities simultaneously
+      each must receive a different effort value.
+      If two opportunities genuinely seem equal,
+      re-examine the scope more carefully.
+      The one with broader system impact gets 
+      the higher effort value.
+
+    Rule 6 — When in doubt, go higher:
+      Underestimating effort on a fintech platform 
+      creates missed sprints, broken commitments, 
+      and user trust erosion from half-shipped fixes.
+      It is always better to overestimate effort 
+      and ship early than to underestimate 
+      and ship late or broken.
+
+    SELF CHECK BEFORE RETURNING EFFORT VALUE
+    -----------------------------------------
+    For each opportunity ask these questions in order:
+
+    Q1. Does this fix touch a live transaction, 
+        trade execution, or fund movement flow?
+        Yes → minimum 4 weeks. 
+        If root cause unknown → 8 weeks.
+
+    Q2. Does this fix involve diagnosing 
+        or resolving a crash or freeze?
+        Yes → 8 weeks. No exceptions.
+
+    Q3. Is the underlying data already available 
+        in the system and this is a display fix only?
+        Yes → maximum 2 weeks.
+
+    Q4. Is this a support process, routing, 
+        or response time improvement?
+        Yes → 2 weeks unless third-party 
+        integration needed → then 4 weeks.
+
+    Q5. Does this require changes across 
+        frontend, backend, and data layers?
+        Yes → minimum 4 weeks.
+
+    Q6. Have I assigned the same effort value 
+        to more than one opportunity in this batch?
+        Yes → re-examine and differentiate.
+
+    Only return the effort value after all 
+    6 questions have been answered.
 
     WRITING RULES:
     - Generate exactly 3 product opportunities.
@@ -239,7 +399,12 @@ def call_gemini(themes, metrics):
                 # Protect against division by zero
                 effort = max(1.0, effort)
                 
-                rice = (revs * impact * conf) / effort
+                # RICE Formula with effort penalty amplification
+                # Standard RICE = (Reach * Impact * Confidence) / Effort
+                # For this specific context, high review volume (Reach) often dominates the 
+                # equation, burying quick wins. We square the effort to heavily penalize 
+                # long-running 8-week projects and surface the 1-2 week quick wins first.
+                rice = (revs * impact * conf) / (effort ** 1.5)
                 idea["rice_score"] = round(rice, 1)
                 
             # Re-sort and re-rank
