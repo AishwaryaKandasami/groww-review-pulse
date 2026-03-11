@@ -355,9 +355,8 @@ def generate_pdf(pulse_data, date_str):
             trend = idea.get("trend_signal", "→ stable")
             
             p_text = f"<b>#{rank}. {title}</b><br/>"
-            p_text += f"<font size='10' color='#333333'>RICE Score: {rice} | Effort: {effort} week{'s' if str(effort) != '1' else ''}</font><br/><br/>"
-            p_text += f"<font size='11' color='#444444'>{s1} {s2}</font><br/>"
-            p_text += f"<font size='9' color='#888888'>Signal: {revs} reviews | Avg {rating}★ | {trend}</font>"
+            p_text += f"<font size='10' color='#333333'>RICE Score: {rice}</font><br/><br/>"
+            p_text += f"<font size='11' color='#444444'>{s1} {s2}</font>"
             story.append(Paragraph(p_text, normal_style))
             story.append(Spacer(1, 10))
         else:
