@@ -1,60 +1,60 @@
 {
   "themes": [
     {
-      "theme_name": "Brokerage Charges and Fees",
-      "review_count": 17,
+      "theme_name": "Poor Customer Service",
+      "review_count": 21,
       "sentiment_score": 0.05,
       "representative_quotes": [
-        "very high broker rate in every transaction or share sell",
-        "extra charges along with brokerage",
-        "brokerage charges at will, Sometimes 78, sometimes 84, sometimes 64"
+        "As usual groww is not responding",
+        "Rand Customer Service BKL Ko 10 min Tak Call karne ka try Kia Koi nahi uthaya",
+        "customer service is very bad bina order apne aap kar dete h grow me aaj ka hi order dekh sakte h"
       ]
     },
     {
-      "theme_name": "Order Execution and Technical Issues",
-      "review_count": 15,
-      "sentiment_score": 0.07,
+      "theme_name": "Technical Issues and Glitches",
+      "review_count": 17,
+      "sentiment_score": 0.0,
       "representative_quotes": [
-        "orders execution me farji karta h",
-        "technical error when trying to exit the market",
-        "app auto-liquidated my mutual funds and refuses to provide any update"
+        "Today the app crashed & I got 3600 loss because of crashed",
+        "App lagging reflecting of latest SEBI guidelines",
+        "Many bugs are coming while trading in apps and they are irritating me"
       ]
     },
     {
-      "theme_name": "Customer Support and Responsiveness",
-      "review_count": 12,
-      "sentiment_score": 0.08,
+      "theme_name": "Brokerage Charges and Fees",
+      "review_count": 14,
+      "sentiment_score": 0.05,
       "representative_quotes": [
-        "Rand Customer Service 🤧 BKL Ko 10 min Tak Call karne ka try Kia Koi nahi uthaya",
-        "customer care is verey slow, not responding on time",
-        "customer service is very bad bina order apne aap kar dete h"
+        "The brokerage charges too high and I suggest don't use this app",
+        "if u are small trader or invester I recommend never go on this platform they give to kuch charge which accumulated your profits",
+        "Your option brokerage charges are too high"
       ]
     },
     {
-      "theme_name": "External Funds Tracking and Mutual Funds",
-      "review_count": 7,
-      "sentiment_score": 0.14,
+      "theme_name": "External Fund Tracking and Import Issues",
+      "review_count": 10,
+      "sentiment_score": 0.0,
       "representative_quotes": [
-        "External funds unable to track in Groww application",
-        "tracking external funds is currently paused",
-        "Mutual Fund Portfolio Refresh is missing"
+        "i don't understand why the external funds tracking is currently not available",
+        "External fund Import has not been working since last 2 weeks but Groww did not help to resolve it",
+        "unable to track my external fund it was important to track my SIP PLEASE update the app and give a solution please"
       ]
     },
     {
-      "theme_name": "General Feedback and Suggestions",
-      "review_count": 22,
-      "sentiment_score": 0.45,
+      "theme_name": "Order Execution and Trading Issues",
+      "review_count": 8,
+      "sentiment_score": 0.0,
       "representative_quotes": [
-        "new update is not so good",
-        "add multiple basket for future and options",
-        "add the technical support & resistance to nifty 50 chart in app"
+        "do. ot use this app the execution of order is delayed and technical problem and also they do not pick calls ...",
+        "worst app, very high brokerage, and also very worst in order execution , I cancel my order before execution but still that order is executed",
+        "Biggest Crashed Application ever i have seen, not even a single chart is opening how to enter or exit..i strongly recommend to go with other standard brokers.."
       ]
     }
   ],
   "metrics": {
-    "current_sentiment": 0.158,
-    "previous_sentiment": 0.06000000000000001,
-    "sentiment_trend": "Up (+0.10)",
+    "current_sentiment": 0.02,
+    "previous_sentiment": 0.158,
+    "sentiment_trend": "Down (-0.14)",
     "spike_alerts": []
   }
 }
