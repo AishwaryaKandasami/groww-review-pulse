@@ -2,59 +2,59 @@
   "themes": [
     {
       "theme_name": "Poor Customer Service",
-      "review_count": 21,
-      "sentiment_score": 0.05,
-      "representative_quotes": [
-        "As usual groww is not responding",
-        "Rand Customer Service BKL Ko 10 min Tak Call karne ka try Kia Koi nahi uthaya",
-        "customer service is very bad bina order apne aap kar dete h grow me aaj ka hi order dekh sakte h"
-      ]
-    },
-    {
-      "theme_name": "Technical Issues and Glitches",
       "review_count": 17,
       "sentiment_score": 0.0,
       "representative_quotes": [
-        "Today the app crashed & I got 3600 loss because of crashed",
-        "App lagging reflecting of latest SEBI guidelines",
-        "Many bugs are coming while trading in apps and they are irritating me"
+        "As usual groww is not responding",
+        "customer service is very bad bina order apne aap kar dete h grow me aaj ka hi order dekh sakte h",
+        "Rand Customer Service 🤧 BKL Ko 10 min Tak Call karne ka try Kia Koi nahi uthaya"
       ]
     },
     {
-      "theme_name": "Brokerage Charges and Fees",
-      "review_count": 14,
-      "sentiment_score": 0.05,
-      "representative_quotes": [
-        "The brokerage charges too high and I suggest don't use this app",
-        "if u are small trader or invester I recommend never go on this platform they give to kuch charge which accumulated your profits",
-        "Your option brokerage charges are too high"
-      ]
-    },
-    {
-      "theme_name": "External Fund Tracking and Import Issues",
-      "review_count": 10,
+      "theme_name": "Technical Issues and Bugs",
+      "review_count": 15,
       "sentiment_score": 0.0,
       "representative_quotes": [
-        "i don't understand why the external funds tracking is currently not available",
         "External fund Import has not been working since last 2 weeks but Groww did not help to resolve it",
-        "unable to track my external fund it was important to track my SIP PLEASE update the app and give a solution please"
+        "not able to refresh the external fund , earlier used to refresh but recently that feature is decomposed",
+        "Today the app crashed & I got 3600 loss because of crashed. Not working the app to sell when I was at profit.."
       ]
     },
     {
-      "theme_name": "Order Execution and Trading Issues",
+      "theme_name": "High Brokerage Charges and Unfair Practices",
+      "review_count": 14,
+      "sentiment_score": 0.0,
+      "representative_quotes": [
+        "This app isn't good. They deduct brokerage charges at will. Sometimes 78, sometimes 84, sometimes 64",
+        "if u are small trader or invester I recommend never go on this platform they give to kuch charge which accumulated your profits",
+        "worst app, very high brokerage, and also very worst in order execution"
+      ]
+    },
+    {
+      "theme_name": "Missing Features and Functionality",
       "review_count": 8,
       "sentiment_score": 0.0,
       "representative_quotes": [
-        "do. ot use this app the execution of order is delayed and technical problem and also they do not pick calls ...",
-        "worst app, very high brokerage, and also very worst in order execution , I cancel my order before execution but still that order is executed",
-        "Biggest Crashed Application ever i have seen, not even a single chart is opening how to enter or exit..i strongly recommend to go with other standard brokers.."
+        "I don't know why groww removed for external mutual funds from showing in the app",
+        "Mutual Fund Portfolio Refresh is missing. Please make the Mutual Fund Portfolio Refresh option available in Groww app",
+        "add multiple basket for future and options"
+      ]
+    },
+    {
+      "theme_name": "Lagging and Unresponsive App",
+      "review_count": 5,
+      "sentiment_score": 0.0,
+      "representative_quotes": [
+        "App lagging reflecting of latest SEBI guidelines",
+        "Rubbish app in terms of network optimization total failure even in 5g this app fails to load pathetic",
+        "Your option brokerage charges are too high. Application also lagging in profit trades"
       ]
     }
   ],
   "metrics": {
-    "current_sentiment": 0.02,
-    "previous_sentiment": 0.158,
-    "sentiment_trend": "Down (-0.14)",
+    "current_sentiment": 0.0,
+    "previous_sentiment": 0.02,
+    "sentiment_trend": "Stable",
     "spike_alerts": []
   }
 }
