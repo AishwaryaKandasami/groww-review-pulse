@@ -1,0 +1,60 @@
+{
+  "themes": [
+    {
+      "theme_name": "Delayed or Missing External Fund Updates",
+      "review_count": 6,
+      "sentiment_score": 0.0,
+      "representative_quotes": [
+        "External fund tracking in MF section is not working for a while. Why? Is this a bug?",
+        "Refresh external fund is on hold now. I। switching to other app.",
+        "Grow par bahut dino se external funds update nahi ho rhe dusre sabi apps par fund update ho rhe hain grow ko be update jaldi deni chahiye ta ke hum aap ne external funds ko grow par track kar ske"
+      ]
+    },
+    {
+      "theme_name": "High Brokerage Charges",
+      "review_count": 8,
+      "sentiment_score": 0.0,
+      "representative_quotes": [
+        "buy= 20 rupees charge + gst. sell= 20 rupees charge + gst. 40 rupees+gst on every trade is too expensive.",
+        "app good.. but brokrge charges high",
+        "wrost app brokerage is so high than others"
+      ]
+    },
+    {
+      "theme_name": "Poor Customer Service and Support",
+      "review_count": 10,
+      "sentiment_score": 0.0,
+      "representative_quotes": [
+        "I several time raise the issue but anyone willing to solve the issue",
+        "Customer care does not seem care much whether you lived or died.",
+        "when we contact customer care they are saying different answers . worst performance of app. and not even providing solutions to our problem."
+      ]
+    },
+    {
+      "theme_name": "Technical Issues and Glitches",
+      "review_count": 7,
+      "sentiment_score": 0.0,
+      "representative_quotes": [
+        "I had almost recovered my loss and only around ₹800 was left. When I refreshed the Groww app, my order got executed automatically and my loss suddenly increased again.",
+        "app me 24/7 call dikha rahe 10min wait karo kuch bhi response nahi milega grow team ke sath chat karo vo bol rahe humari senior team aapko call karnge abhi tak kuch nahi ",
+        "Not a reliable app for trading because of discrepancies/delays encountered during selling & buying stocks."
+      ]
+    },
+    {
+      "theme_name": "Lack of Features and Functionality",
+      "review_count": 5,
+      "sentiment_score": 0.0,
+      "representative_quotes": [
+        "why you guys don't have nifty other index like oil and gas,metal,FMCG etc",
+        "app me aapko call put ek hi strike price pr set hoti isme scalping feature me Alag alag strike price so hona chiye & stop-loss chart pr nhi lagta & trailing stoploss ka feature bhi nhi hai",
+        "The app was working just fine when they disabled the feature that would let you export the external funds as well."
+      ]
+    }
+  ],
+  "metrics": {
+    "current_sentiment": 0.0,
+    "previous_sentiment": 0.09,
+    "sentiment_trend": "Down (-0.09)",
+    "spike_alerts": []
+  }
+}
