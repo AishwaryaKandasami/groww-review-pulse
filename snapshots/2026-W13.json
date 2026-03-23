@@ -1,0 +1,73 @@
+{
+  "themes": [
+    {
+      "theme_name": "External Fund Tracking Issues",
+      "review_count": 17,
+      "sentiment_score": 0.0,
+      "representative_quotes": [
+        "Tracking external funds is currently paused.",
+        "last month ki Sip show nhi ho raha h application me pichhle month se hi problem aa rahi h..",
+        "tracking external fund is paused for weeks now...no updates..."
+      ]
+    },
+    {
+      "theme_name": "High Brokerage Charges",
+      "review_count": 14,
+      "sentiment_score": 0.0,
+      "representative_quotes": [
+        "Brokerage bahut jyada lete hai please agar koi demate account kholna chahta hai to pehle ache se search karle ki kon si app kam brokerage lete hai",
+        "This app is worse, brokerage and external charges are extremely high",
+        "daily commission is charged on stocks and commission is charged on brokerage so please be careful while investing on stocks."
+      ]
+    },
+    {
+      "theme_name": "Technical Issues and Glitches",
+      "review_count": 13,
+      "sentiment_score": 0.0,
+      "representative_quotes": [
+        "refresh not working",
+        "Failed to load option chain Network pure hone pr bhi grow shi s kaam nhi kar rha lgta h",
+        "bhot der me order execute hota hai network zara bhi kam ho to loss hi milta hai..."
+      ]
+    },
+    {
+      "theme_name": "Poor Customer Support",
+      "review_count": 6,
+      "sentiment_score": 0.0,
+      "representative_quotes": [
+        "Very poor customer support. Calls take 40 minutes, chat promises 3 minutes but takes over 1 hour.",
+        "They've got worse customer support,I tried to call them it was not reachable and the chat process guys just ignored or left the chat without sharing the proper information.",
+        "full worst service i am using in 4 years don't use this... customer service full bad or charges have facility full..faltu"
+      ]
+    },
+    {
+      "theme_name": "Miscellaneous Issues",
+      "review_count": 19,
+      "sentiment_score": 0.0,
+      "representative_quotes": [
+        "don't install this app....there is no proper customer care....even contract file will not open after downloading...",
+        "minor trading is not supported",
+        "old version is good but update not good update everyone new found of mf is to this problem solved because mf not track so this app is not working good"
+      ]
+    }
+  ],
+  "metrics": {
+    "current_sentiment": 0.0,
+    "previous_sentiment": 0.0,
+    "sentiment_trend": "Stable",
+    "spike_alerts": [
+      {
+        "theme": "High Brokerage Charges",
+        "increase_pct": 75.0,
+        "prev_count": 8,
+        "curr_count": 14
+      },
+      {
+        "theme": "Technical Issues and Glitches",
+        "increase_pct": 85.71428571428571,
+        "prev_count": 7,
+        "curr_count": 13
+      }
+    ]
+  }
+}
