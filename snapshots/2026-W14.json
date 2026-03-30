@@ -1,0 +1,67 @@
+{
+  "themes": [
+    {
+      "theme_name": "Technical Issues and Glitches",
+      "review_count": 23,
+      "sentiment_score": 0.0,
+      "representative_quotes": [
+        "The biggest issue is frequent technical glitches. During market hours, the app often lags, crashes, or simply doesn’t let you log in or place orders.",
+        "every two days all your chart settings automatically gone and then uninstall the app and download again what is going to your app .",
+        "something not working. very bad experience"
+      ]
+    },
+    {
+      "theme_name": "External Funds Tracking and Portfolio Issues",
+      "review_count": 14,
+      "sentiment_score": 0.0,
+      "representative_quotes": [
+        "WHY Tracking external funds is currently paused ???? You could have done it from the beginning.",
+        "I cannot see the 'Track External funds Anymore' option . It's really inconvenient . Don't know why they removed the feature",
+        "external funds are not update it says we will be back soon with update but ,no any update on this"
+      ]
+    },
+    {
+      "theme_name": "Brokerage and Charges",
+      "review_count": 13,
+      "sentiment_score": 0.0,
+      "representative_quotes": [
+        "charges is too high ",
+        "Charges are too high .. Jitna profit nhi hota , usse jyada ye log tax kaat lete hai",
+        "very high brokerage, and also very worst in order execution , I cancel my order before execution but still that order is executed"
+      ]
+    },
+    {
+      "theme_name": "Customer Support and Experience",
+      "review_count": 12,
+      "sentiment_score": 0.0,
+      "representative_quotes": [
+        "zero customer service support",
+        "customer support is worst no one has good knowledge, instead of this go for other app",
+        "😡worst app😡... my personal suggestion never use this app. Customer support is zero😡."
+      ]
+    },
+    {
+      "theme_name": "Feature Requests and Suggestions",
+      "review_count": 5,
+      "sentiment_score": 0.5,
+      "representative_quotes": [
+        "add scalper mode and line drag stop-loss system and index call put premium charts in a one screen and add more indicators .",
+        "it's okay",
+        "I am not having internet problem but the icons in stock market has become invisible. in mutual fund section it is okay."
+      ]
+    }
+  ],
+  "metrics": {
+    "current_sentiment": 0.1,
+    "previous_sentiment": 0.0,
+    "sentiment_trend": "Up (+0.10)",
+    "spike_alerts": [
+      {
+        "theme": "Technical Issues and Glitches",
+        "increase_pct": 76.92307692307693,
+        "prev_count": 13,
+        "curr_count": 23
+      }
+    ]
+  }
+}
